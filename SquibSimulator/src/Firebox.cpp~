@@ -1,0 +1,205 @@
+#include "Firebox.h"
+
+Firebox::Firebox()
+{
+	active = false;
+	position = 0;
+	address = -1;
+
+	for(int i = 0; i < 12; i++)
+	{
+		lunchboxList[i].setPosition(i);
+		lunchboxList[i].setActive(false);
+	}
+}
+
+Firebox::Firebox(bool enable)
+{
+	active = enable;
+	position = 0;
+	address = -1;
+
+	for(int i = 0; i < 12; i++)
+	{
+		lunchboxList[i].setPosition(i);
+		lunchboxList[i].setActive(enable);
+	}
+}
+
+Firebox::Firebox(bool activeLunchboxes[12], bool enable)
+{
+	active = enable;
+	position = 0;
+	address = -1;
+
+	for(int i = 0; i < 12; i++)
+	{
+		lunchboxList[i].setPosition(i);
+		lunchboxList[i].setActive(activeLunchboxes[i]);
+	}
+}
+
+Firebox::~Firebox()
+{
+	for(int i = 0; i < 12; i++)
+	{
+		lunchboxList[i].setPosition(-1);
+		lunchboxList[i].setActive(false);
+	}
+
+	address = -1;
+}
+
+bool Firebox::setPosition(int pos)
+{
+	if(pos >=0 && pos < 16)
+	{
+		position = pos;
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+int Firebox::getPosition()
+{
+	return position;
+}
+
+void Firebox::setActive(bool activate)
+{
+	active = activate;
+}
+
+bool Firebox::getActive()
+{
+	return active;
+}
+
+void Firebox::setAddress(int add)
+{
+	address = add;
+}
+
+int Firebox::getAddress()
+{
+	return address;
+}
+
+void Firebox::setLunchboxAddress(int lPos, int add)
+{
+	lunchboxList[lPos].setAddress(add);
+}
+
+int Firebox::getLunchboxAddress(int lPos)
+{
+	return lunchboxList[lPos].getAddress();
+}
+
+void Firebox::setSquibAddress(int lPos, int sPos, int add)
+{
+	lunchboxList[lPos].setSquibAddress(sPos, add);
+}
+
+int Firebox::getSquibAddress(int lPos, int sPos)
+{
+	return lunchboxList[lPos].getSquibAddress(sPos);
+}
+
+void Firebox::setActiveLunchboxes(int numLunchboxes, int numSquibs)
+{
+	for(int i = 0; i < numLunchboxes; i++)
+	{
+		lunchboxList[i].setActive(true);
+		lunchboxList[i].setActiveSquibs(numSquibs);
+	}
+}
+
+void Firebox::setArmedSquib(int lAdd, int sAdd, bool arm)
+{
+	for(int i = 0; i < 12; i++)
+	{
+		if(lunchboxList[i].getAddress() == lAdd)
+		{
+			lunchboxList[i].setArmedSquib(sAdd, arm);
+		}
+	}
+}
+
+bool Firebox::getArmedSquib(int lAdd, int sAdd)
+{
+	for(int i = 0; i < 12; i++)
+	{
+		if(lunchboxList[i].getAddress() == lAdd)
+		{
+			return lunchboxList[i].getArmedSquib(sAdd);
+		}
+	}
+
+	return false;
+}
+
+void Firebox::setActiveSquib(int lAdd, int sAdd, bool arm)
+{
+	for(int i = 0; i < 12; i++)
+	{
+		if(lunchboxList[i].getAddress() == lAdd)
+		{
+			lunchboxList[i].setActiveSquib(sAdd, arm);
+		}
+	}
+}
+
+bool Firebox::getActiveSquib(int lAdd, int sAdd)
+{
+	for(int i = 0; i < 12; i++)
+	{
+		if(lunchboxList[i].getAddress() == lAdd)
+		{
+			return lunchboxList[i].getActiveSquib(sAdd);
+		}
+	}
+
+	return false;
+}
+
+void Firebox::fireSquib(int lPos, int sPos)
+{
+	lunchboxList[lPos].fireSquib(sPos);
+}
+
+void Firebox::stopFire(int lPos, int sPos)
+{
+	lunchboxList[lPos].stopFire(sPos);
+}
+
+
+void Firebox::display()
+{
+	if(active)
+	{
+		cout << " F";
+
+		if(position < 10)
+		{
+			cout << " ";
+		}
+
+ 		cout << position << " {";
+
+		for(int i = 0; i < 12; i++)
+		{
+			if(lunchboxList[i].getActive() == true)
+			{
+				lunchboxList[i].display();
+			}
+		}
+
+		cout << "}" << endl;
+	}
+
+	
+}
+

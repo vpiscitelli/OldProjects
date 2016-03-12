@@ -1,0 +1,65 @@
+Simulation Program
+==================
+by Vance Piscitelli
+Last Edited: 11/23/15
+
+Description
+-----------
+This program simulates some of the packets that are sent in DSSP's pyrotechnic system. Their system communicates between a computer and multiple other devices using a RS485 cable and a custom protocol since RS485 does not have any official standard.
+
+Required Libraries
+------------------
+This program was designed and tested to work on Ubuntu.
+OpenGl, GLUT, and GLEW must both be installed/working in order to compile and run this simulation.
+
+*GLUT and GLEW can be installed on Ubuntu with this command*
+
+>$ sudo apt-get install freeglut3-dev freeglut3 libglew1.6-dev
+
+Compiling the Program
+---------------------
+To compile the program, from the build folder:	
+		make 
+
+Or from the main folder type:
+		make -C ./build
+
+Or from the bin folder type:
+		make -C ../build
+
+Executing the Program
+---------------------
+To run the program, from the bin folder, type:
+		./Simulation
+
+Or from the main folder type:
+		./bin/Simulation
+
+Or from the build folder:
+		../bin/Simulation
+
+User Controls
+-------------
+
+	Right-Click: Brings up the menu
+		Quit: 				Ends the program.
+		Toggle Pause: 		Toggles whether the simulation is paused.
+		Assign Addresses: 	Assigns addresses to the Universe.
+							Must be done before other commands are sent.
+		Arm Random Squib:	Randomly selects a Squib to arm.
+							It does not actually fire the squib.
+		Fire Armed Squibs:	Fires all armed squibs.
+		Display Time Step:	Displays the current time step in the terminal.
+		Help:				Displays the help menu in the terminal.
+
+	Keyboard Controls:
+		ESCAPE KEY:			Ends the program.
+		'P':		 		Toggles whether the simulation is paused.
+		'S':				Assigns addresses to the Universe.
+							Must be done before other commands are sent.
+		'R':				Randomly selects a Squib to arm.
+							It does not actually fire the squib.
+		'F':				Fires all armed squibs.
+		'T':				Displays the current time step in the terminal.
+		'H':				Displays the help menu in the terminal.
+

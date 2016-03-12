@@ -1,0 +1,198 @@
+#include "Lunchbox.h"
+
+Lunchbox::Lunchbox()
+{
+	active = false;
+	position = 0;
+	address = -1;
+
+	for(int i = 0; i < 8; i++)
+	{
+		squibList[i].setPosition(i);
+		squibList[i].setActive(false);
+	}
+}
+
+// Lunchbox and squibs are made all active or all not active
+Lunchbox::Lunchbox(bool enable)
+{
+	active = enable;
+	position = 0;
+	address = -1;
+
+	for(int i = 0; i < 8; i++)
+	{
+		squibList[i].setPosition(i);
+		squibList[i].setActive(enable);
+	}
+}
+
+Lunchbox::Lunchbox(bool activeSquibs[8], bool enable)
+{
+	active = enable;
+	position = 0;
+	address = -1;
+
+	for(int i = 0; i < 8; i++)
+	{
+		squibList[i].setPosition(i);
+		squibList[i].setActive(activeSquibs[i]);
+	}
+}
+ 
+Lunchbox::~Lunchbox()
+{
+	for(int i = 0; i < 8; i++)
+	{
+		squibList[i].setPosition(-1);
+		squibList[i].setActive(false);
+	}
+
+	address = -1;
+}
+
+bool Lunchbox::setPosition(int pos)
+{
+	if(pos >=0 && pos < 12)
+	{
+		position = pos;
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+int Lunchbox::getPosition()
+{
+	return position;
+}
+
+void Lunchbox::setActive(bool activate)
+{
+	active = activate;
+}
+
+bool Lunchbox::getActive()
+{
+	return active;
+}
+
+void Lunchbox::setAddress(int add)
+{
+	address = add;
+}
+
+int Lunchbox::getAddress()
+{
+	return address;
+}
+
+void Lunchbox::setSquibAddress(int sPos, int add)
+{
+	squibList[sPos].setAddress(add);
+}
+
+int Lunchbox::getSquibAddress(int sPos)
+{
+	return squibList[sPos].getAddress();
+}
+
+void Lunchbox::setActiveSquibs(int numSquibs)
+{
+	for(int i = 0; i < numSquibs; i++)
+	{
+		squibList[i].setActive(true);
+	}
+}
+
+void Lunchbox::setArmedSquib(int sAdd, bool arm)
+{
+	for(int i = 0; i < 8; i++)
+	{
+		if(squibList[i].getAddress() == sAdd)
+		{
+			squibList[i].setArmed(arm);
+		}
+	}
+}
+
+bool Lunchbox::getArmedSquib(int sAdd)
+{
+	for(int i = 0; i < 8; i++)
+	{
+		if(squibList[i].getAddress() == sAdd)
+		{
+			return squibList[i].getArmed();
+		}
+	}
+
+	return false;
+}
+
+void Lunchbox::setActiveSquib(int sAdd, bool arm)
+{
+	for(int i = 0; i < 8; i++)
+	{
+		if(squibList[i].getAddress() == sAdd)
+		{
+			squibList[i].setActive(arm);
+		}
+	}
+}
+
+bool Lunchbox::getActiveSquib(int sAdd)
+{
+	for(int i = 0; i < 8; i++)
+	{
+		if(squibList[i].getAddress() == sAdd)
+		{
+			return squibList[i].getActive();
+		}
+	}
+
+	return false;
+}
+
+void Lunchbox::fireSquib(int sPos)
+{
+	squibList[sPos].fire();
+}
+
+void Lunchbox::stopFire(int sPos)
+{
+	squibList[sPos].stopFire();
+}
+
+bool Lunchbox::getFiring(int sPos)
+{
+	return squibList[sPos].getFiring();
+}
+
+void Lunchbox::display()
+{
+	if(active)
+	{
+		if(position == 4 || position == 8)
+		{
+			cout << endl << "      ";
+		}
+
+		cout << " L";
+
+		if(position < 10)
+		{
+			cout << " ";
+		}
+ 		
+		cout << position << " [";
+
+		for(int i = 0; i < 8; i++)
+		{
+			squibList[i].display();
+		}
+
+		cout << "]";
+	}
+}

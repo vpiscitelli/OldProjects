@@ -1,0 +1,181 @@
+// Squib.cpp
+
+#include "Squib.h"
+
+using namespace std;
+
+// constructors
+
+// default constructor
+Squib::Squib()
+{	
+	active = false;
+	armed = false;
+	firing = false;
+	position = 0;
+	numFires = 0;
+	address = -1;
+}
+
+Squib::Squib(int pos, bool activate)
+{
+	// set position
+	if(pos >= 0 && pos <= 7)
+	{
+		position = pos;
+	}
+	else
+	{
+		position = 0;
+	}
+
+	// default number of fires to 0
+	numFires = 0;
+	active = activate;
+	address = -1;
+	armed = false;
+	firing = false;
+}
+
+Squib::Squib(int pos, int fires, bool activate)
+{
+	// set position
+	if(pos >= 0 && pos <= 7)
+	{
+		position = pos;
+	}
+	else
+	{
+		position = 0;
+	}
+
+	// set number of fires
+	if(fires > 0)
+	{
+		numFires = fires;
+	}
+	else
+	{
+		numFires = 0;
+	}
+
+	// set whether the squib is enabled
+	active = activate;
+	
+	address = -1;
+	armed = false;
+	firing = false;
+}
+
+// destructor
+Squib::~Squib()
+{
+	position = -1;
+	numFires = -1;
+	active = false;
+	address = -1;
+	armed = false;
+	firing = false;
+}
+
+// tries to fire this squib
+void Squib::fire()
+{
+	if(active && armed && address != -1)
+	{
+		firing = true;
+		cout << "Firing (" << address << ")" << endl;
+
+		armed = false;
+		numFires++;
+	}
+
+}
+
+void Squib::stopFire()
+{
+	if(firing)
+	{
+		firing = false;
+	}
+
+}
+
+bool Squib::getFiring()
+{
+	return firing;
+}
+
+// returns number of times fired
+int Squib::getNumFires()
+{
+	return numFires;
+}
+
+// returns the current position of the squib
+int Squib::getPosition()
+{
+	return position;
+}
+
+// sets the position of the Squib.
+// must be between 0 & 7
+bool Squib::setPosition(int pos)
+{
+	if(pos >= 0 && pos <= 7)
+	{
+		position = pos;
+		return true;
+	}
+	
+	return false;
+}
+
+// sets enabled to true or false 
+void Squib::setActive(bool activate)
+{
+	active = activate;
+}
+
+// gets whether or not the squib has been enabled
+bool Squib::getActive()
+{
+	return active;
+}
+
+void Squib::setArmed(bool arm)
+{
+	armed = arm;
+}
+
+bool Squib::getArmed()
+{
+	return armed;
+}
+
+void Squib::setAddress(int add)
+{
+	address = add;
+}
+
+int Squib::getAddress()
+{
+	return address;
+}
+
+void Squib::display()
+{
+	if(firing)
+	{
+		cout << "*";
+	}
+	if(active)
+	{
+		cout << "o";
+	}
+	else
+	{
+		cout << ".";
+	}
+}
+
